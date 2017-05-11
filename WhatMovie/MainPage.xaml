@@ -5,6 +5,7 @@
     xmlns:local="using:WhatMovie"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:WhatMovie.Models"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -45,7 +46,8 @@
                    DisplayMode="CompactOverlay" 
                    OpenPaneLength="200" 
                    CompactPaneLength="56" 
-                   HorizontalAlignment="Left">
+                   HorizontalAlignment="Left"
+                   >
             <SplitView.Pane>
                 <ListBox SelectionMode="Single" Name="IconsListBox" SelectionChanged="IconsListBox_SelectionChanged">
                     <ListBoxItem Name="HomeListBoxItem">
@@ -76,6 +78,17 @@
             </SplitView.Pane>
             <SplitView.Content>
                 <Frame Name="MyFrame">
+                    <GridView ItemsSource="{x:Bind Movies}">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="data:Movie">
+                                <StackPanel>
+                                    <Image Width="150" Source="{x:Bind poster_path}"/>
+                                    <TextBlock FontSize="16" Text="{x:Bind title}"/>
+                                    <TextBlock FontSize="10" Text="{x:Bind tagline}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </Frame>
             </SplitView.Content>
 

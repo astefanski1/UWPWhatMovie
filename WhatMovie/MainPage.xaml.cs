@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WhatMovie.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,12 +23,14 @@ namespace WhatMovie
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private List<Movie> Movies;
         public MainPage()
         {
             this.InitializeComponent();
-            MyFrame.Navigate(typeof(Home));
+            //MyFrame.Navigate(typeof(Home));
             TitleTextBlock.Text = "Home";
             BackButton.Visibility = Visibility.Collapsed;
+            Movies = MovieManager.GetMovies();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)

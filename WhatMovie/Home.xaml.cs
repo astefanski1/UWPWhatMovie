@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WhatMovie.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,9 +23,11 @@ namespace WhatMovie
     /// </summary>
     public sealed partial class Home : Page
     {
+        List<Movie> Movies;
         public Home()
         {
             this.InitializeComponent();
+            Movies = MovieManager.GetMovies();
         }
     }
 }
