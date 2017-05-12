@@ -11,7 +11,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <RelativePanel>
             <Button Name="HamburgerButton" 
@@ -38,7 +38,7 @@
             <TextBox Name="SearchTextBox"
                      RelativePanel.LeftOf="SearchButton"
                      Height="48"
-                     Width="200"
+                     Width="Auto"
                      FontSize="24" />
         </RelativePanel>
         <SplitView Name="MySplitView" 
@@ -78,21 +78,9 @@
             </SplitView.Pane>
             <SplitView.Content>
                 <Frame Name="MyFrame">
-                    <GridView ItemsSource="{x:Bind Movies}">
-                        <GridView.ItemTemplate>
-                            <DataTemplate x:DataType="data:Movie">
-                                <StackPanel>
-                                    <Image Width="150" Source="{x:Bind poster_path}"/>
-                                    <TextBlock FontSize="16" Text="{x:Bind title}"/>
-                                    <TextBlock FontSize="10" Text="{x:Bind tagline}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
+
                 </Frame>
             </SplitView.Content>
-
-            
         </SplitView>
     </Grid>
 </Page>

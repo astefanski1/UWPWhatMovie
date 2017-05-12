@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using WhatMovie.Models;
+using WhatMovie.Rest;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,11 +25,18 @@ namespace WhatMovie
     /// </summary>
     public sealed partial class Home : Page
     {
-        List<Movie> Movies;
+        Task<RootObject> movie;
         public Home()
         {
             this.InitializeComponent();
-            Movies = MovieManager.GetMovies();
+            movie = getData();
+        }
+
+        public async Task<RootObject> getData()
+        {
+            RootObject movies = await MovieApi.GetMovie("Blue");
+
+            return movies;
         }
     }
 }

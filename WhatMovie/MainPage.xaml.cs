@@ -27,7 +27,7 @@ namespace WhatMovie
         public MainPage()
         {
             this.InitializeComponent();
-            //MyFrame.Navigate(typeof(Home));
+            MyFrame.Navigate(typeof(Home));
             TitleTextBlock.Text = "Home";
             BackButton.Visibility = Visibility.Collapsed;
             Movies = MovieManager.GetMovies();
