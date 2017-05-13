@@ -23,14 +23,12 @@ namespace WhatMovie
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private List<Movie> Movies;
         public MainPage()
         {
             this.InitializeComponent();
             MyFrame.Navigate(typeof(Home));
             TitleTextBlock.Text = "Home";
             BackButton.Visibility = Visibility.Collapsed;
-            Movies = MovieManager.GetMovies();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)

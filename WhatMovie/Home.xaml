@@ -5,20 +5,26 @@
     xmlns:local="using:WhatMovie"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:WhatMovie.Rest"
+    Loaded="Page_Loaded"
+    xmlns:data="using:WhatMovie.Models"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-       <!-- <GridView ItemsSource="{x:Bind Movies}">
+    <Grid>
+        <ProgressRing Name="MyProgresRing" Width="100" Height="100" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <GridView ItemsSource="{x:Bind movies}">
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Movie">
                     <StackPanel>
-                        <Image Width="150" Source="{x:Bind poster_path}"/>
+                        <Image Source="{x:Bind poster_path}" Width="150" Height="200"/>
                         <TextBlock FontSize="16" Text="{x:Bind title}"/>
-                        <TextBlock FontSize="10" Text="{x:Bind tagline}"/>
+                        <TextBlock FontSize="10" Text="{x:Bind release_date}"/>
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>-->
+        </GridView>
     </Grid>
+
+
+
+
 </Page>
