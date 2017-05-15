@@ -53,8 +53,18 @@ namespace WhatMovie
             movieDetails = await MovieApi.GetMovieAsync(selectedMovie.id);
 
             mdImage.Source = new BitmapImage(new Uri(movieDetails.poster_path, UriKind.Absolute));
-            Title.Text = movieDetails.title;
-            OriginalTitle.Text = movieDetails.original_title;
+            Title.Text = " " + movieDetails.title;
+            OriginalTitle.Text = " " + movieDetails.original_title;
+            ReleaseDate.Text = " " + movieDetails.release_date;
+            Overview.Text = " " + movieDetails.overview;
+            VoteCount.Text = " " + movieDetails.vote_count;
+            VoteAverage.Text = " " + movieDetails.vote_average;
+            foreach(var genre in movieDetails.genres)
+            {
+                Genres.Text += " " + genre.name;
+            }
+            OriginalLanguage.Text = " " + movieDetails.original_language;
+            Budget.Text = " " + movieDetails.budget;
 
 
             MoviesGrid.Visibility = Visibility.Collapsed;

@@ -29,10 +29,11 @@ namespace WhatMovie
     {
 
         public ObservableCollection<Movie> movies { get; set; }
+        Movie movieDetails;
         public Home()
         {
             this.InitializeComponent();
-
+            PopularMoviesDetails.Visibility = Visibility.Collapsed;
             movies = new ObservableCollection<Movie>();
         }
 
@@ -45,14 +46,31 @@ namespace WhatMovie
             MyProgresRing.Visibility = Visibility.Collapsed;
         }
 
-        /*private async void GetData()
+        private async void PopularMoviesGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Movie myMovie = await MovieApi.GetMovie("Blue");
-            Title.Text = myMovie.title;
-            ReleaseDate.Text = myMovie.release_date;
-            string poster = String.Format("http://image.tmdb.org/t/p/w185/wzLtkJbUQoI2dEtBgxRYRmPUIV9.jpg");
-            ResultImage.Source = new BitmapImage(new Uri(poster, UriKind.Absolute));
-        }*/
+            PopularMoviesGrid.Visibility = Visibility.Collapsed;
+            PopularMoviesDetails.Visibility = Visibility.Visible;
+            var selectedMovie = (Movie)e.ClickedItem;
+
+            movieDetails = await MovieApi.GetMovieAsync(selectedMovie.id);
+
+            mdImage.Source = new BitmapImage(new Uri(movieDetails.poster_path, UriKind.Absolute));
+            Title.Text = " " + movieDetails.title;
+            OriginalTitle.Text = " " + movieDetails.original_title;
+            ReleaseDate.Text = " " + movieDetails.release_date;
+            Overview.Text = " " + movieDetails.overview;
+            VoteCount.Text = " " + movieDetails.vote_count;
+            VoteAverage.Text = " " + movieDetails.vote_average;
+            foreach (var genre in movieDetails.genres)
+            {
+                Genres.Text += " " + genre.name;
+            }
+            OriginalLanguage.Text = " " + movieDetails.original_language;
+            Budget.Text = " " + movieDetails.budget;
+
+
+            
+        }
 
     }
 }

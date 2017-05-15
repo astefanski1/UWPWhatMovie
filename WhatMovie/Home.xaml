@@ -10,18 +10,131 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Grid Name="PopularMoviesGrid">
+            <GridView ItemsSource="{x:Bind movies}"
+                  Name="PopularMoviesGridView"
+                  IsItemClickEnabled="True"
+                  ItemClick="PopularMoviesGrid_ItemClick">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Movie">
+                        <StackPanel>
+                            <Image Source="{x:Bind poster_path}" Width="150" Height="200"/>
+                            <TextBlock FontSize="16" Text="{x:Bind title}" TextAlignment="Center"/>
+                            <TextBlock FontSize="12" Text="{x:Bind release_date}" TextAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+        <Grid Name="PopularMoviesDetails">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Name="mdImage" 
+                   Height="300"
+                   Width="200"
+                   Margin="20,20,0,0"
+                   Grid.Column="0"
+                   Grid.Row="0"/>
+            <Grid Grid.Row="0" Grid.Column="1" Margin="20,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Title: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="Title" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Original title: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="OriginalTitle" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Release date: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="ReleaseDate" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Overview: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="Overview" Grid.Column="1" TextWrapping="WrapWholeWords" />
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Votes: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="VoteCount" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Rating: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="VoteAverage" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Genres: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="Genres" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Original language: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="OriginalLanguage" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Row="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Budget: " FontWeight="Bold" Grid.Column="0"/>
+                    <TextBlock Name="Budget" Grid.Column="1"/>
+                </Grid>
+            </Grid>
+        </Grid>
         <ProgressRing Name="MyProgresRing" Width="100" Height="100" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <GridView ItemsSource="{x:Bind movies}">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="data:Movie">
-                    <StackPanel>
-                        <Image Source="{x:Bind poster_path}" Width="150" Height="200"/>
-                        <TextBlock FontSize="16" Text="{x:Bind title}" TextAlignment="Center"/>
-                        <TextBlock FontSize="12" Text="{x:Bind release_date}" TextAlignment="Center"/>
-                    </StackPanel>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
     </Grid>
 
 
