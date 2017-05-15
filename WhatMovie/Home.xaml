@@ -10,11 +10,13 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid Name="PopularMoviesGrid">
+        <Grid Name="PopularMoviesGrid" RelativePanel.AlignTopWithPanel="True">
             <GridView ItemsSource="{x:Bind movies}"
-                  Name="PopularMoviesGridView"
-                  IsItemClickEnabled="True"
-                  ItemClick="PopularMoviesGrid_ItemClick">
+                Name="PopularMoviesGridView"
+                IsItemClickEnabled="True"
+                ItemClick="PopularMoviesGrid_ItemClick"
+                VerticalAlignment="Top"
+                >
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="data:Movie">
                         <StackPanel>
@@ -25,7 +27,11 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
+
+            <Button Name="MoreMovies" Content="More Movies" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="MoreMovies_Click" Margin="0,50,0,0"/>
         </Grid>
+        
+
         <Grid Name="PopularMoviesDetails">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -35,11 +41,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image Name="mdImage" 
-                   Height="300"
-                   Width="200"
-                   Margin="20,20,0,0"
-                   Grid.Column="0"
-                   Grid.Row="0"/>
+                Height="300"
+                Width="200"
+                Margin="20,20,0,0"
+                Grid.Column="0"
+                Grid.Row="0"/>
             <Grid Grid.Row="0" Grid.Column="1" Margin="20,20,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -134,6 +140,7 @@
                 </Grid>
             </Grid>
         </Grid>
+
         <ProgressRing Name="MyProgresRing" Width="100" Height="100" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>
 

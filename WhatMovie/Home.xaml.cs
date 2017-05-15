@@ -29,12 +29,16 @@ namespace WhatMovie
     {
 
         public ObservableCollection<Movie> movies { get; set; }
+        public ObservableCollection<Movie> addMovies { get; set; }
         Movie movieDetails;
+        public int page { get; set; }
         public Home()
         {
             this.InitializeComponent();
             PopularMoviesDetails.Visibility = Visibility.Collapsed;
             movies = new ObservableCollection<Movie>();
+            addMovies = new ObservableCollection<Movie>();
+            page = 1;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -67,10 +71,17 @@ namespace WhatMovie
             }
             OriginalLanguage.Text = " " + movieDetails.original_language;
             Budget.Text = " " + movieDetails.budget;
-
-
-            
         }
 
+        private async void MoreMovies_Click(object sender, RoutedEventArgs e)
+        {
+            page = page + 1;
+            await MovieApi.PopularMovieToListAsync(addMovies, page);
+            foreach (var movie in addMovies)
+            {
+                movies.Add(movie);
+            }
+            addMovies.Clear();
+        }
     }
 }

@@ -31,6 +31,7 @@
                 </GridView.ItemTemplate>
             </GridView>
         </Grid>
+        <Button Name="MoreMovies" Content="More Movies" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="MoreMovies_Click" Margin="0,50,0,0"/>
         <Grid Name="MovieDetailsGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -138,7 +139,7 @@
                     <TextBlock Name="Budget" Grid.Column="1"/>
                 </Grid>
             </Grid>
-            
+
         </Grid>
         <ProgressRing Name="MyProgresRing" Width="100" Height="100" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>

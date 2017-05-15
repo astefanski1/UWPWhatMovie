@@ -28,12 +28,16 @@ namespace WhatMovie
     public sealed partial class Top : Page
     {
         public ObservableCollection<Movie> movies { get; set; }
+        public ObservableCollection<Movie> addMovies { get; set; }
+        public int page { get; set; }
         Movie movieDetails;
         public Top()
         {
             this.InitializeComponent();
             movies = new ObservableCollection<Movie>();
+            addMovies = new ObservableCollection<Movie>();
             MovieDetailsGrid.Visibility = Visibility.Collapsed;
+            page = 1;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -68,6 +72,17 @@ namespace WhatMovie
 
 
             MoviesGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private async void MoreMovies_Click(object sender, RoutedEventArgs e)
+        {
+            page = page + 1;
+            await MovieApi.TopRatedMovieToListAsync(addMovies, page);
+            foreach (var movie in addMovies)
+            {
+                movies.Add(movie);
+            }
+            addMovies.Clear();
         }
     }
 }
