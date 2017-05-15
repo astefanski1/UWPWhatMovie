@@ -40,7 +40,7 @@ namespace WhatMovie
         {
             MyProgresRing.IsActive = true;
             MyProgresRing.Visibility = Visibility.Visible;
-            await MovieApi.MovieDataToListAsync(movies);
+            await MovieApi.PopularMovieToListAsync(movies,1);
             MyProgresRing.IsActive = false;
             MyProgresRing.Visibility = Visibility.Collapsed;
         }

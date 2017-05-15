@@ -45,7 +45,6 @@
                    DisplayMode="CompactOverlay" 
                    OpenPaneLength="200" 
                    CompactPaneLength="56" 
-                   HorizontalAlignment="Left"
                    >
             <SplitView.Pane>
                 <ListBox SelectionMode="Single" Name="IconsListBox" SelectionChanged="IconsListBox_SelectionChanged">

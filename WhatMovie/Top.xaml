@@ -5,9 +5,40 @@
     xmlns:local="using:WhatMovie"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="Page_Loaded"
+    xmlns:data="using:WhatMovie.Models"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Name="MoviesGrid">
+            <GridView ItemsSource="{x:Bind movies}" 
+                  Name="TopRatedGridView"
+                  IsItemClickEnabled="True"
+                  ItemClick="TopRatedGridView_ItemClick"
+                  >
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="data:Movie">
+                        <StackPanel>
+                            <Image Source="{x:Bind poster_path}" Width="150" Height="200"/>
+                            <TextBlock FontSize="16" Text="{x:Bind title}" TextAlignment="Center"/>
+                            <TextBlock TextAlignment="Center" FontSize="12">
+                            <Run Text="{x:Bind vote_average}" FontWeight="Bold"/>
+                            <Run Text="&#xE1CE;" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+        <Grid Name="MovieDetailsGrid">
+            <Image Name="mdImage" 
+                   Height="300"
+                   Width="200"
+                   Margin="20,20,0,0"/>
+            <TextBlock Name="Title" Grid.Column="1"/>
+            <TextBlock Name="OriginalTitle" Grid.Column="1"/>
+        </Grid>
+        <ProgressRing Name="MyProgresRing" Width="100" Height="100" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>
 </Page>

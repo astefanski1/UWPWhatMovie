@@ -16,8 +16,8 @@
                 <DataTemplate x:DataType="data:Movie">
                     <StackPanel>
                         <Image Source="{x:Bind poster_path}" Width="150" Height="200"/>
-                        <TextBlock FontSize="16" Text="{x:Bind title}"/>
-                        <TextBlock FontSize="10" Text="{x:Bind release_date}"/>
+                        <TextBlock FontSize="16" Text="{x:Bind title}" TextAlignment="Center"/>
+                        <TextBlock FontSize="12" Text="{x:Bind release_date}" TextAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
