@@ -18,6 +18,40 @@ namespace WhatMovie.Rest
 
 
         //To Model List
+
+        public static async Task NowPlayingToListAsync(ObservableCollection<Movie> moviesList, int page)
+        {
+            var movieData = await GetNowPlayingMoviesAsync(page);
+
+            var movies = movieData.results;
+
+            foreach (var movie in movies)
+            {
+                string url = String.Format("http://image.tmdb.org/t/p/w185{0}", movie.poster_path);
+                movie.poster_path = url;
+                // Filter characters that are missing thumbnail images
+                moviesList.Add(movie);
+            }
+        }
+
+        public static async Task searchedMoviesToListAsync(ObservableCollection<Movie> moviesList, int page, string query)
+        {
+            if(query != "")
+            {
+                var movieData = await getSearchedMoviesAsync(page, query);
+
+                var movies = movieData.results;
+
+                foreach (var movie in movies)
+                {
+                    string url = String.Format("http://image.tmdb.org/t/p/w185{0}", movie.poster_path);
+                    movie.poster_path = url;
+                    // Filter characters that are missing thumbnail images
+                    moviesList.Add(movie);
+                }
+            }
+        }
+
         public static async Task PopularMovieToListAsync(ObservableCollection<Movie> moviesList, int page)
         {
             var movieData = await GetPopularMoviesAsync(page);
@@ -87,6 +121,40 @@ namespace WhatMovie.Rest
         public async static Task<MovieData> GetTopRatedMoviesAsync(int page)
         {
             string url = String.Format("https://api.themoviedb.org/3/movie/top_rated?api_key={0}&language=en-US&page={1}", privateApiKey, page);
+            HttpClient http = new HttpClient();
+            var response = await http.GetAsync(url);
+            var jsonMessage = await response.Content.ReadAsStringAsync();
+
+            //Response
+
+            var serializer = new DataContractJsonSerializer(typeof(MovieData));
+            var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonMessage));
+
+            var data = (MovieData)serializer.ReadObject(memoryStream);
+
+            return data;
+        }
+
+        public async static Task<MovieData> getSearchedMoviesAsync(int page, string query)
+        {
+            string url = String.Format("https://api.themoviedb.org/3/search/movie?api_key={0}&language=en-US&query={1}&page={2}", privateApiKey, query, page);
+            HttpClient http = new HttpClient();
+            var response = await http.GetAsync(url);
+            var jsonMessage = await response.Content.ReadAsStringAsync();
+
+            //Response
+
+            var serializer = new DataContractJsonSerializer(typeof(MovieData));
+            var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonMessage));
+
+            var data = (MovieData)serializer.ReadObject(memoryStream);
+
+            return data;
+        }
+
+        public async static Task<MovieData> GetNowPlayingMoviesAsync(int page)
+        {
+            string url = String.Format("https://api.themoviedb.org/3/movie/now_playing?api_key={0}&language=en-US&page={1}", privateApiKey, page);
             HttpClient http = new HttpClient();
             var response = await http.GetAsync(url);
             var jsonMessage = await response.Content.ReadAsStringAsync();

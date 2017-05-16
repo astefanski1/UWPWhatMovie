@@ -5,6 +5,7 @@
     xmlns:local="using:WhatMovie"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:WhatMovie.Models"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -29,16 +30,16 @@
                        FontSize="28"
                        FontWeight="Bold"
                        RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-            <Button Name="SearchButton"
-                    RelativePanel.AlignRightWithPanel="True"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="36"
-                    Content="&#xE1A3;"/>
-            <TextBox Name="SearchTextBox"
-                     RelativePanel.LeftOf="SearchButton"
-                     Height="48"
-                     Width="Auto"
-                     FontSize="24" />
+            <AutoSuggestBox Name="SearchAutoSuggestBox" 
+                            PlaceholderText="Search for sounds"
+                            Width="200"
+                            QueryIcon="Find"
+                            Margin="0,5,10,0"
+                            TextChanged="SearchAutoSuggestBox_TextChanged"
+                            QuerySubmitted="SearchAutoSuggestBox_QuerySubmitted"
+                            RelativePanel.AlignRightWithPanel="True"
+                            >
+            </AutoSuggestBox>
         </RelativePanel>
         <SplitView Name="MySplitView" 
                    Grid.Row="1" 
