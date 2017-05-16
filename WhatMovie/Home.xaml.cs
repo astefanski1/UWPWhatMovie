@@ -17,6 +17,7 @@ using WhatMovie.Rest;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using System.Collections.ObjectModel;
+using WhatMovie.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,7 +31,7 @@ namespace WhatMovie
 
         public ObservableCollection<Movie> movies { get; set; }
         public ObservableCollection<Movie> addMovies { get; set; }
-        Movie movieDetails;
+        public Movie movieDetails { get; set; }
         public int page { get; set; }
         public Home()
         {
@@ -52,11 +53,24 @@ namespace WhatMovie
 
         private async void PopularMoviesGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
+
             PopularMoviesGrid.Visibility = Visibility.Collapsed;
             PopularMoviesDetails.Visibility = Visibility.Visible;
             var selectedMovie = (Movie)e.ClickedItem;
 
             movieDetails = await MovieApi.GetMovieAsync(selectedMovie.id);
+
+            using (var db = dbConnection.connectionDB)
+            {
+                List<Movie> favoriteMovies = (from p in db.Table<Movie>() select p).ToList();
+                foreach (var favMovie in favoriteMovies)
+                {
+                    if (favMovie.id == movieDetails.id)
+                    {
+                        addToCollection.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
 
             mdImage.Source = new BitmapImage(new Uri(movieDetails.poster_path, UriKind.Absolute));
             Title.Text = " " + movieDetails.title;
@@ -65,12 +79,9 @@ namespace WhatMovie
             Overview.Text = " " + movieDetails.overview;
             VoteCount.Text = " " + movieDetails.vote_count;
             VoteAverage.Text = " " + movieDetails.vote_average;
-            foreach (var genre in movieDetails.genres)
-            {
-                Genres.Text += " " + genre.name;
-            }
             OriginalLanguage.Text = " " + movieDetails.original_language;
             Budget.Text = " " + movieDetails.budget;
+
         }
 
         private async void MoreMovies_Click(object sender, RoutedEventArgs e)
@@ -82,6 +93,28 @@ namespace WhatMovie
                 movies.Add(movie);
             }
             addMovies.Clear();
+        }
+
+        private void addToCollection_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var db = dbConnection.connectionDB)
+                {
+                    Movie movieToSave = movieDetails;
+                    db.Insert(movieToSave);
+                    addToCollection.IsEnabled = false;
+                }
+            }
+            catch (Exception)
+            {
+                addToCollection.Content = "Can't add movie to collection";
+            }
+        }
+
+        private void backToList_Click(object sender, RoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(Home));
         }
     }
 }

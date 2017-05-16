@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using WhatMovie.Models;
+using WhatMovie.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -29,6 +30,7 @@ namespace WhatMovie
             MyFrame.Navigate(typeof(Home));
             TitleTextBlock.Text = "Home";
             BackButton.Visibility = Visibility.Collapsed;
+            dbConnection.createDb();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)

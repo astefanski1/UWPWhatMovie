@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using WhatMovie.Models;
 using WhatMovie.Rest;
+using WhatMovie.Storage;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -30,7 +31,7 @@ namespace WhatMovie
         public ObservableCollection<Movie> movies { get; set; }
         public ObservableCollection<Movie> addMovies { get; set; }
         public int page { get; set; }
-        Movie movieDetails;
+        public Movie movieDetails { get; set; }
         public Top()
         {
             this.InitializeComponent();
@@ -51,10 +52,23 @@ namespace WhatMovie
 
         private async void TopRatedGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            MoviesGrid.Visibility = Visibility.Collapsed;
             MovieDetailsGrid.Visibility = Visibility.Visible;
             var selectedMovie = (Movie)e.ClickedItem;
 
             movieDetails = await MovieApi.GetMovieAsync(selectedMovie.id);
+
+            using (var db = dbConnection.connectionDB)
+            {
+                List<Movie> favoriteMovies = (from p in db.Table<Movie>() select p).ToList();
+                foreach (var favMovie in favoriteMovies)
+                {
+                    if (favMovie.id == movieDetails.id)
+                    {
+                        addToCollection.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
 
             mdImage.Source = new BitmapImage(new Uri(movieDetails.poster_path, UriKind.Absolute));
             Title.Text = " " + movieDetails.title;
@@ -63,15 +77,8 @@ namespace WhatMovie
             Overview.Text = " " + movieDetails.overview;
             VoteCount.Text = " " + movieDetails.vote_count;
             VoteAverage.Text = " " + movieDetails.vote_average;
-            foreach(var genre in movieDetails.genres)
-            {
-                Genres.Text += " " + genre.name;
-            }
             OriginalLanguage.Text = " " + movieDetails.original_language;
             Budget.Text = " " + movieDetails.budget;
-
-
-            MoviesGrid.Visibility = Visibility.Collapsed;
         }
 
         private async void MoreMovies_Click(object sender, RoutedEventArgs e)
@@ -83,6 +90,28 @@ namespace WhatMovie
                 movies.Add(movie);
             }
             addMovies.Clear();
+        }
+
+        private void addToCollection_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var db = dbConnection.connectionDB)
+                {
+                    Movie movieToSave = movieDetails;
+                    db.Insert(movieToSave);
+                    addToCollection.IsEnabled = false;
+                }
+            }
+            catch (Exception)
+            {
+                addToCollection.Content = "Can't add movie to collection";
+            }
+        }
+
+        private void backToList_Click(object sender, RoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(Top));
         }
     }
 }
