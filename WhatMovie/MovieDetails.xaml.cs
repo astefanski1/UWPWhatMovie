@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using WhatMovie.Models;
 using WhatMovie.Storage;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -58,6 +60,7 @@ namespace WhatMovie
             catch (Exception)
             {
                 addToCollection.Content = "Can't add movie to collection";
+                PopToast();
             }
         }
 
@@ -83,6 +86,34 @@ namespace WhatMovie
             VoteCount.Text = " " + movie.vote_count;
             VoteAverage.Text = " " + movie.vote_average;
             OriginalLanguage.Text = " " + movie.original_language;
+        }
+
+        private void PopToast()
+        {
+            ToastContent toastContent = CreateDummyToast();
+            ToastNotificationManager.CreateToastNotifier()
+            .Show(new ToastNotification(toastContent.GetXml()));
+        }
+
+        private ToastContent CreateDummyToast()
+        {
+            return new ToastContent()
+            {
+                Launch = "action=viewEvent&eventId=1983",
+                Scenario = ToastScenario.Default,
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText(){Text = $"Good job!"},
+                            new AdaptiveText(){Text = $"U added {movie.title} to your collections!"},
+                            new AdaptiveText(){Text = $"Go to collection and check this out!"}
+                        }
+                    }
+                }
+            };
         }
     }
 }

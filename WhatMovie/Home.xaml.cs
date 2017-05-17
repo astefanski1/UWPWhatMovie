@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using System.Collections.ObjectModel;
 using WhatMovie.Storage;
+using Windows.UI.Notifications;
+using Microsoft.Toolkit.Uwp.Notifications; // Notifications library
+using Microsoft.QueryStringDotNET; // QueryString.NET
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -53,9 +56,11 @@ namespace WhatMovie
 
         private async void PopularMoviesGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
+            MyProgresRing.IsActive = true;
+            MyProgresRing.Visibility = Visibility.Visible;
 
             PopularMoviesGrid.Visibility = Visibility.Collapsed;
-            PopularMoviesDetails.Visibility = Visibility.Visible;
+            
             var selectedMovie = (Movie)e.ClickedItem;
 
             movieDetails = await MovieApi.GetMovieAsync(selectedMovie.id);
@@ -82,6 +87,10 @@ namespace WhatMovie
             OriginalLanguage.Text = " " + movieDetails.original_language;
             Budget.Text = " " + movieDetails.budget;
 
+            MyProgresRing.IsActive = false;
+            MyProgresRing.Visibility = Visibility.Collapsed;
+            PopularMoviesDetails.Visibility = Visibility.Visible;
+
         }
 
         private async void MoreMovies_Click(object sender, RoutedEventArgs e)
@@ -104,6 +113,7 @@ namespace WhatMovie
                     Movie movieToSave = movieDetails;
                     db.Insert(movieToSave);
                     addToCollection.IsEnabled = false;
+                    PopToast();
                 }
             }
             catch (Exception)
@@ -115,6 +125,34 @@ namespace WhatMovie
         private void backToList_Click(object sender, RoutedEventArgs e)
         {
             MyFrame.Navigate(typeof(Home));
+        }
+
+        private void PopToast()
+        {
+            ToastContent toastContent = CreateDummyToast();
+            ToastNotificationManager.CreateToastNotifier()
+            .Show(new ToastNotification(toastContent.GetXml()));
+        }
+
+        private ToastContent CreateDummyToast()
+        {
+            return new ToastContent()
+            {
+                Launch = "action=viewEvent&eventId=1983",
+                Scenario = ToastScenario.Default,
+                Visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
+                    {
+                        Children =
+                        {
+                            new AdaptiveText(){Text = $"Good job!"},
+                            new AdaptiveText(){Text = $"U added {movieDetails.title} to your collections!"},
+                            new AdaptiveText(){Text = $"Go to collection and check this out!"}
+                        }
+                    }
+                }
+            };
         }
     }
 }

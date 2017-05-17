@@ -56,7 +56,7 @@ namespace WhatMovie
             if(TopListBoxItem.IsSelected)
             {
                 MyFrame.Navigate(typeof(Top));
-                TitleTextBlock.Text = "Top10";
+                TitleTextBlock.Text = "Top Rated";
                 BackButton.Visibility = Visibility.Visible;
             }
             if(FavoriteListBoxItem.IsSelected)

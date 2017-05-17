@@ -144,6 +144,7 @@
                     </Grid>
                 </Grid>
             </Grid>
+            <ProgressRing Name="MyProgresRing" Width="100" Height="100" Foreground="Gray" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
     </Frame>
 </Page>
