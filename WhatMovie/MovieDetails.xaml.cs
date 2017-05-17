@@ -83,7 +83,6 @@ namespace WhatMovie
             VoteCount.Text = " " + movie.vote_count;
             VoteAverage.Text = " " + movie.vote_average;
             OriginalLanguage.Text = " " + movie.original_language;
-            Budget.Text = " " + movie.budget;
         }
     }
 }

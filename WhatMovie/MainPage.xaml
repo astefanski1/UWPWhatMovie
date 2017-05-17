@@ -58,7 +58,7 @@
                     <ListBoxItem Name="TopListBoxItem">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="36" Text="&#xE24A;" />
-                            <TextBlock Text="Top 10" FontSize="24" Margin="20,0,0,0"/>
+                            <TextBlock Text="Top Rated" FontSize="24" Margin="20,0,0,0"/>
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Name="FavoriteListBoxItem">
